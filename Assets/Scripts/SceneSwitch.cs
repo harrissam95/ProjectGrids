@@ -4,8 +4,7 @@ using UnityEngine;
 //necessary for scene switching
 using UnityEngine.SceneManagement;
 
-/*
- * Author: Sam Harris
+/* Author: Sam Harris
  * Goal: Handle the switching of scenes and storing the OverWorld (Scene 0) position
  * as necessary when leaving with the intent of returning at the same place. The OW 
  * position is stored within the MainManager singleton. If returning to OW at a door
@@ -14,28 +13,31 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-
+    //Init class-wide variables
+    private int sceneId;
+    private string colliderTag;
+    
     //start
     private void Start()
     {
+        //get index value of currently loaded scene
+        sceneId = SceneManager.GetActiveScene().buildIndex;
         setPlayerLocation();
     }//end Start
 
     //switch scenes on trigger depending on what the collision is with
     private void OnTriggerEnter(Collider other)
     {
-        //get an int value of current scene
-        int sceneId = SceneManager.GetActiveScene().buildIndex;
+        colliderTag = other.gameObject.tag.ToLower();
 
-        //switch based on tag of collided object
-        switch ((other.gameObject.tag.ToLower(), sceneId))
+        switch ((colliderTag, sceneId))
         {
             case ("grass", 0):
-                storeInfo(sceneId, false, other);
+                storeInfo(other);
                 SceneManager.LoadScene(1);
                 break;
             case ("door", 0):
-                storeInfo(sceneId, true, other);
+                storeInfo(other);
                 SceneManager.LoadScene(2);
                 break;
             case ("door", 2):
@@ -50,11 +52,9 @@ public class SceneSwitch : MonoBehaviour
     }//end onTriggerEnter
 
     //get and store info like current position, current rotation, and current scene before loading a new one
-    private void storeInfo(int scene, bool isDoor, Collider collider)
+    private void storeInfo(Collider collider)
     {
-        //decide on whether or not to keep isDoor or replace with just if you pass
-        //a collider or not to check if we should look for spawn point or not
-        if (isDoor)
+        if (colliderTag == "door")
         {
             //get and store child SpawnPoint of object/door's position/rotation
             MainManager.Instance.doorSpawnPos = collider.transform.Find("SpawnPoint").gameObject.transform.position;
@@ -62,12 +62,11 @@ public class SceneSwitch : MonoBehaviour
         }
         else
         {
-            //store all available info into singleton
             MainManager.Instance.playerPosOverworld = transform.localPosition;
             MainManager.Instance.playerRotOverworld = transform.localRotation;
-            MainManager.Instance.lastScene = scene;
         }
 
+        MainManager.Instance.lastScene = sceneId;
     }//end storeInfo
 
     //sets the player's location based on what's needed
@@ -75,7 +74,7 @@ public class SceneSwitch : MonoBehaviour
     {
         if (MainManager.Instance != null)
         {
-            if (SceneManager.GetActiveScene().buildIndex == 0)
+            if (sceneId == 0)
             {
                 GetComponent<CharacterController>().enabled = false;
 
