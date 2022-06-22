@@ -40,6 +40,22 @@ public class MovementController : MonoBehaviour
         playerInput.CharacterControls.Run.canceled += onRun;
     }//end Awake
 
+    void onMovementInput(InputAction.CallbackContext context)
+    {
+        currentMovementInput = context.ReadValue<Vector2>();
+        currentMovement.x = currentMovementInput.x * walkSpeed;
+        //character will move on x/z plane
+        currentMovement.z = currentMovementInput.y * walkSpeed;
+        currentRunMovement.x = currentMovementInput.x * runSpeed;
+        currentRunMovement.z = currentMovementInput.y * runSpeed;
+        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
+    }//end onMovementInput
+
+    void onRun(InputAction.CallbackContext context)
+    {
+        isRunPressed = context.ReadValueAsButton();
+    }//end onRun
+
     void handleRotation()
     {
         //change in position the player should point to
@@ -99,22 +115,6 @@ public class MovementController : MonoBehaviour
             currentRunMovement.y += gravity * Time.deltaTime;
         }
     }//end handleGravity
-
-    void onMovementInput (InputAction.CallbackContext context)
-    {
-        currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x * walkSpeed;
-        //character will move on x/z plane
-        currentMovement.z = currentMovementInput.y * walkSpeed;
-        currentRunMovement.x = currentMovementInput.x * runSpeed;
-        currentRunMovement.z = currentMovementInput.y * runSpeed;
-        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
-    }//end onMovementInput
-
-    void onRun(InputAction.CallbackContext context)
-    {
-        isRunPressed = context.ReadValueAsButton();
-    }//end onRun
 
     // Update is called once per frame
     void Update()
