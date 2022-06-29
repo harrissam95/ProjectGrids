@@ -19,8 +19,6 @@ public class MovementController : MonoBehaviour
     float walkTilt = 7.0f;
     float runTilt = 14.0f;
 
-    // Awake is called earlier than Start
-    //great for initially setting reference variables.
     private void Awake()
     {
         playerInput = new CharacterActions();
@@ -29,18 +27,18 @@ public class MovementController : MonoBehaviour
         //based on CharacterControls set up earlier in CharacterActions class
         //this will be called when WASD is held. context gives access to input data
         //when started callback occurs.
-        playerInput.CharacterControls.Move.started += onMovementInput;
-        playerInput.CharacterControls.Move.canceled += onMovementInput;
+        playerInput.CharacterControls.Move.started += OnMovementInput;
+        playerInput.CharacterControls.Move.canceled += OnMovementInput;
         //Performed is for things like controllers which have more values than 
         //just 0 or 1(think slight tilt of joystick) or even for multi-key movement
         //like W and A on the keyboard to move diagonally
-        playerInput.CharacterControls.Move.performed += onMovementInput;
+        playerInput.CharacterControls.Move.performed += OnMovementInput;
 
-        playerInput.CharacterControls.Run.started += onRun;
-        playerInput.CharacterControls.Run.canceled += onRun;
+        playerInput.CharacterControls.Run.started += OnRun;
+        playerInput.CharacterControls.Run.canceled += OnRun;
     }//end Awake
 
-    void onMovementInput(InputAction.CallbackContext context)
+    void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x * walkSpeed;
@@ -51,12 +49,12 @@ public class MovementController : MonoBehaviour
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }//end onMovementInput
 
-    void onRun(InputAction.CallbackContext context)
+    void OnRun(InputAction.CallbackContext context)
     {
         isRunPressed = context.ReadValueAsButton();
     }//end onRun
 
-    void handleRotation()
+    void HandleRotation()
     {
         //change in position the player should point to
         //Vector3 playerTilt = transform.rotation.eulerAngles;
@@ -99,7 +97,7 @@ public class MovementController : MonoBehaviour
         }
     }//end handleRotation
 
-    void handleGravity()
+    void HandleGravity()
     {
         //considered "floating" if 0 downward movement, so groundedGravity offsets this
         if (characterController.isGrounded)
@@ -116,11 +114,10 @@ public class MovementController : MonoBehaviour
         }
     }//end handleGravity
 
-    // Update is called once per frame
     void Update()
     {
-        handleRotation();
-        handleGravity();
+        HandleRotation();
+        HandleGravity();
 
         if (isRunPressed)
         {

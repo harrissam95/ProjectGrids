@@ -10,7 +10,7 @@ public class GridMovement : MonoBehaviour
     MouseMovement mouseMovement;
     CharacterController characterController;
     private Vector3 destination;
-    private Vector2 mousePosition;
+    private Vector3 mousePosition;
     [SerializeField] private float speed;
 
     private void Awake()
@@ -22,7 +22,8 @@ public class GridMovement : MonoBehaviour
     private void Start()
     {
         //destination = transform.position;
-        mouseMovement.Mouse.MouseLeftClick.performed += onMouseClick;
+        mouseMovement.Mouse.MouseLeftClick.performed += OnMouseClick;
+
     }//end Start
 
     private void Update()
@@ -30,9 +31,9 @@ public class GridMovement : MonoBehaviour
         //moveCharacter();
     }//end Update
 
-    private void onMouseClick(InputAction.CallbackContext context)
+    private void OnMouseClick(InputAction.CallbackContext context)
     {
-        mousePosition = mouseMovement.Mouse.MousePosition.ReadValue<Vector2>();
+        mousePosition = mouseMovement.Mouse.MousePosition.ReadValue<Vector3>();
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Debug.Log("Mouse Position X: " + mousePosition.x);
         Debug.Log("Mouse Position Y: " + mousePosition.y);
@@ -40,7 +41,7 @@ public class GridMovement : MonoBehaviour
         destination.x = mousePosition.x;
         destination.z = mousePosition.y;
 
-        moveCharacter();
+        MoveCharacter();
         //Vector3Int gridPos = map.WorldToCell(mousePosition);
         ////make sure we are clicking the cell
         //if (map.HasTile(gridPos))
@@ -50,7 +51,7 @@ public class GridMovement : MonoBehaviour
 
     }//end onMouseClick
 
-    private void moveCharacter()
+    private void MoveCharacter()
     {
         //if(Vector3.Distance(transform.position, destination) > 0.1f)
         //{
@@ -68,18 +69,6 @@ public class GridMovement : MonoBehaviour
     {
         mouseMovement.Disable();
     }//end onDisable
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
