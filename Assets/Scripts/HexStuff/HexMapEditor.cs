@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -7,9 +5,11 @@ using UnityEngine.InputSystem;
 public class HexMapEditor : MonoBehaviour
 {
     public Color[] colors;
+    public Material[] materials;
     public HexGrid hexGrid;
+    public int activeElevation;
 
-    private Color activeColor;
+    private Material activeColor;
 
     private void Awake()
     {
@@ -18,10 +18,10 @@ public class HexMapEditor : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame &&
+            !EventSystem.current.IsPointerOverGameObject())
         {
-            if(!EventSystem.current.IsPointerOverGameObject())
-                OnMouseClick();
+            OnMouseClick();
         }
     }
 
@@ -31,12 +31,24 @@ public class HexMapEditor : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out RaycastHit hit))
         {
-            hexGrid.ColorCell(hit.point, activeColor);
+            EditCell(hexGrid.GetCell(hit.point));
         }
+    }
+
+    public void EditCell(HexCell cell)
+    {
+        cell.GetComponentInChildren<MeshRenderer>().material = activeColor;
+        cell.Elevation = activeElevation;
     }
 
     public void SelectColor(int index)
     {
-        activeColor = colors[index];
+        activeColor = materials[index];
     }
+
+    public void SetElevation(float elevation)
+    {
+        activeElevation = (int)elevation;
+    }
+
 }
