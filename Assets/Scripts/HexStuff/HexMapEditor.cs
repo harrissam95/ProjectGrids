@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 
 public class HexMapEditor : MonoBehaviour
 {
-    public Color[] colors;
     public Material[] materials;
     public HexGrid hexGrid;
+    public Canvas hexCanvas;
     public int activeElevation;
 
     private Material activeColor;
+    private bool applyColor;
+    private bool applyElevation = true;
 
     private void Awake()
     {
@@ -35,15 +37,25 @@ public class HexMapEditor : MonoBehaviour
         }
     }
 
-    public void EditCell(HexCell cell)
+    private void EditCell(HexCell cell)
     {
-        cell.GetComponentInChildren<MeshRenderer>().material = activeColor;
-        cell.Elevation = activeElevation;
+        if (applyColor)
+        {
+            cell.GetComponentInChildren<MeshRenderer>().material = activeColor;
+        }
+        if (applyElevation)
+        {
+            cell.Elevation = activeElevation;
+        }
     }
 
     public void SelectColor(int index)
     {
-        activeColor = materials[index];
+        applyColor = index >= 0;
+        if (applyColor)
+        {
+            activeColor = materials[index];
+        }
     }
 
     public void SetElevation(float elevation)
@@ -51,4 +63,13 @@ public class HexMapEditor : MonoBehaviour
         activeElevation = (int)elevation;
     }
 
+    public void SetApplyElevation(bool toggle)
+    {
+        applyElevation = toggle;
+    }
+
+    public void SetShowCoordinates(bool toggle)
+    {
+        hexCanvas.gameObject.SetActive(toggle);
+    }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public struct HexCoordinates
 {
-    //with these serialized fields, we can return the coords on the object generated 
     [SerializeField] private int x, z;
 
     public int X 

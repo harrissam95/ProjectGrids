@@ -67,7 +67,9 @@ public class HexMesh : MonoBehaviour
             //HexCell prevNeighbor = cell.GetNeighbor(direction.Previous()) ?? cell;
             //HexCell neighbor = cell.GetNeighbor(direction) ?? cell;
             //HexCell nextNeighbor = cell.GetNeighbor(direction.Next()) ?? cell;
-            AddTriangleColor(cell.color);
+
+            //removed color from HexCell.cs
+            //AddTriangleColor(cell.color);
         }
         
     }

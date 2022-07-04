@@ -9,7 +9,7 @@ public class HexGrid : MonoBehaviour
     public int height = 10;
     public float offset;
 
-    public Color defaultColor = Color.white;
+    public Material defaultMaterial;
 
     private HexCell[] cells;
     private Canvas gridCanvas;
@@ -31,16 +31,6 @@ public class HexGrid : MonoBehaviour
         }
     }
 
-    //private void Start()
-    //{
-    //    hexMesh.Triangulate(cells);
-    //}
-
-    //public void Refresh()
-    //{
-    //    hexMesh.Triangulate(cells);
-    //}
-
     public HexCell GetCell(Vector3 position)
     {
         position = transform.InverseTransformPoint(position);
@@ -60,7 +50,7 @@ public class HexGrid : MonoBehaviour
         cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
-        cell.color = defaultColor;
+        cell.GetComponentInChildren<MeshRenderer>().material = defaultMaterial;
 
         if(x > 0)
         {
