@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.IO;
 
 public class HexMapEditor : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class HexMapEditor : MonoBehaviour
     public int activeElevation;
 
     private Material activeColor;
-    private bool applyColor;
-    private bool applyElevation = true;
+    private bool colorToggle;
+    private bool elevationToggle = true;
+    private bool editToggle = true;
 
     private void Awake()
     {
@@ -33,17 +35,25 @@ public class HexMapEditor : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out RaycastHit hit))
         {
-            EditCell(hexGrid.GetCell(hit.point));
+            HexCell currentCell = hexGrid.GetCell(hit.point);
+            if (editToggle)
+            {
+                EditCell(currentCell);
+            }
+            else
+            {
+                hexGrid.FindDistancesTo(currentCell);
+            }
         }
     }
 
     private void EditCell(HexCell cell)
     {
-        if (applyColor)
+        if (colorToggle)
         {
             cell.GetComponentInChildren<MeshRenderer>().material = activeColor;
         }
-        if (applyElevation)
+        if (elevationToggle)
         {
             cell.Elevation = activeElevation;
         }
@@ -51,8 +61,8 @@ public class HexMapEditor : MonoBehaviour
 
     public void SelectColor(int index)
     {
-        applyColor = index >= 0;
-        if (applyColor)
+        colorToggle = index >= 0;
+        if (colorToggle)
         {
             activeColor = materials[index];
         }
@@ -63,13 +73,38 @@ public class HexMapEditor : MonoBehaviour
         activeElevation = (int)elevation;
     }
 
-    public void SetApplyElevation(bool toggle)
+    public void SetElevationToggle(bool toggle)
     {
-        applyElevation = toggle;
+        elevationToggle = toggle;
     }
 
-    public void SetShowCoordinates(bool toggle)
+    public void SetEditToggle(bool toggle)
+    {
+        editToggle = toggle;
+    }
+
+    public void SetCoordinatesToggle(bool toggle)
     {
         hexCanvas.gameObject.SetActive(toggle);
+    }
+
+    public void Save()
+    {
+        Debug.Log(Application.persistentDataPath);
+        // C:/Users/Sam/AppData/LocalLow/SamteriaYT/ProjectGrids
+        string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+        {
+            hexGrid.Save(writer);
+        }
+    }
+
+    public void Load()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))
+        {
+            hexGrid.Load(reader);
+        }
     }
 }

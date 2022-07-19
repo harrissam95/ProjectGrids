@@ -26,4 +26,18 @@ public static class HexMetrics
     {
         return corners[(int)direction + 1];
     }
+
+    public static string GetEdgeType (int elevation1, int elevation2)
+    {
+        if(elevation1 == elevation2)
+        {
+            return "flat";
+        }
+        int delta = elevation2 - elevation1;
+        if(delta == 1 || delta == -1)
+        {
+            return "slope";
+        }
+        return "cliff";
+    }
 }
