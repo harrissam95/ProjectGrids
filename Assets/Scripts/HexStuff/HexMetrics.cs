@@ -38,6 +38,14 @@ public static class HexMetrics
         {
             return "slope";
         }
+        if(delta == 2)
+        {
+            return "bigslopeup";
+        }
+        if(delta == -2)
+        {
+            return "bigslopedown";
+        }
         return "cliff";
     }
 }
