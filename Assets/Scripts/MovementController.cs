@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,17 +5,17 @@ public class MovementController : MonoBehaviour
 {
 
     //CharacterActions being the input action class generated.
-    CharacterActions playerInput;
-    CharacterController characterController;
+    private CharacterActions playerInput;
+    private CharacterController characterController;
 
-    Vector2 currentMovementInput;
-    Vector3 currentMovement, currentRunMovement;
-    bool isMovementPressed, isRunPressed;
-    float rotationFactorPerFrame = 10.0f;
-    float runSpeed = 4.0f;
-    float walkSpeed = 2.0f;
-    float walkTilt = 7.0f;
-    float runTilt = 14.0f;
+    private Vector2 currentMovementInput;
+    private Vector3 currentMovement, currentRunMovement;
+    private bool isMovementPressed, isRunPressed;
+    private float rotationFactorPerFrame = 10.0f;
+    private float runSpeed = 4.0f;
+    private float walkSpeed = 2.0f;
+    private float walkTilt = 7.0f;
+    private float runTilt = 14.0f;
 
     private void Awake()
     {
@@ -36,9 +34,9 @@ public class MovementController : MonoBehaviour
 
         playerInput.CharacterControls.Run.started += OnRun;
         playerInput.CharacterControls.Run.canceled += OnRun;
-    }//end Awake
+    }
 
-    void OnMovementInput(InputAction.CallbackContext context)
+    private void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x * walkSpeed;
@@ -47,14 +45,14 @@ public class MovementController : MonoBehaviour
         currentRunMovement.x = currentMovementInput.x * runSpeed;
         currentRunMovement.z = currentMovementInput.y * runSpeed;
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
-    }//end onMovementInput
+    }
 
-    void OnRun(InputAction.CallbackContext context)
+    private void OnRun(InputAction.CallbackContext context)
     {
         isRunPressed = context.ReadValueAsButton();
-    }//end onRun
+    }
 
-    void HandleRotation()
+    private void HandleRotation()
     {
         //change in position the player should point to
         //Vector3 playerTilt = transform.rotation.eulerAngles;
@@ -95,9 +93,9 @@ public class MovementController : MonoBehaviour
             playerTilt.x = 0.0f;
             transform.rotation = Quaternion.Euler(playerTilt);
         }
-    }//end handleRotation
+    }
 
-    void HandleGravity()
+    private void HandleGravity()
     {
         //considered "floating" if 0 downward movement, so groundedGravity offsets this
         if (characterController.isGrounded)
@@ -112,9 +110,9 @@ public class MovementController : MonoBehaviour
             currentMovement.y += gravity * Time.deltaTime;
             currentRunMovement.y += gravity * Time.deltaTime;
         }
-    }//end handleGravity
+    }
 
-    void Update()
+    private void Update()
     {
         HandleRotation();
         HandleGravity();
@@ -128,7 +126,7 @@ public class MovementController : MonoBehaviour
             characterController.Move(currentMovement * Time.deltaTime);
         }
         
-    }//end Update
+    }
 
     private void OnEnable()
     {

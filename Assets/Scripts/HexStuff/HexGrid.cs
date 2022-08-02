@@ -94,6 +94,13 @@ public class HexGrid : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(Search(cell));
+
+        /* 
+         * Goal for this:
+         * Replace or modify to find distances up to movement max
+         * and only highlight cells nearby that are under that 
+         * max movement cap
+        */
     }
 
     IEnumerator Search(HexCell cell)
@@ -112,6 +119,16 @@ public class HexGrid : MonoBehaviour
             yield return delay;
             HexCell current = frontier[0];
             frontier.RemoveAt(0);
+
+            /*
+            //this can be used to break out of the search once 
+            //say the movement cap is hit
+            if (current == toCell)
+            {
+
+            }
+            */
+
             for(HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
             {
                 HexCell neighbor = current.GetNeighbor(d);
@@ -136,11 +153,13 @@ public class HexGrid : MonoBehaviour
                 if (neighbor.Distance == int.MaxValue)
                 {
                     neighbor.Distance = distance + 1;
+                    neighbor.PathFrom = current;
                     frontier.Add(neighbor);
                 }
                 else if(distance < neighbor.Distance)
                 {
                     neighbor.Distance = distance + 1;
+                    neighbor.PathFrom = current;
                 }
                 
                 frontier.Sort((x, y) => x.Distance.CompareTo(y.Distance));

@@ -59,6 +59,12 @@ public class HexCell : MonoBehaviour
         }
     }
 
+    public HexCell PathFrom
+    {
+        get;
+        set;
+    }
+
     public Vector3 Position
     {
         get

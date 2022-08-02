@@ -10,7 +10,9 @@ public class HexMapEditor : MonoBehaviour
     public Canvas hexCanvas;
     public int activeElevation;
 
+    private HexCell previousCell, searchFromCell;
     private Material activeColor;
+    private bool isShiftPressed;
     private bool colorToggle;
     private bool elevationToggle = true;
     private bool editToggle = true;
@@ -20,15 +22,16 @@ public class HexMapEditor : MonoBehaviour
         SelectColor(0);
     }
 
-    private void Update()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame &&
-            !EventSystem.current.IsPointerOverGameObject())
-        {
-            OnMouseClick();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Mouse.current.leftButton.wasPressedThisFrame &&
+    //        !EventSystem.current.IsPointerOverGameObject())
+    //    {
+    //        OnMouseClick();
+    //    }
+    //}
 
+    //Handle Input
     private void OnMouseClick()
     {
         Ray inputRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -40,10 +43,19 @@ public class HexMapEditor : MonoBehaviour
             {
                 EditCell(currentCell);
             }
-            else
-            {
-                hexGrid.FindDistancesTo(currentCell);
-            }
+            //else if (isShiftPressed)
+            //{
+            //    if (searchFromCell)
+            //    {
+            //        searchFromCell.DisableHighlight();
+            //    }
+            //    searchFromCell = currentCell;
+            //    searchFromCell.EnableHighlight(Color.blue);
+            //}
+            //else
+            //{
+            //    hexGrid.FindDistancesTo(currentCell);
+            //}
         }
     }
 
@@ -107,4 +119,5 @@ public class HexMapEditor : MonoBehaviour
             hexGrid.Load(reader);
         }
     }
+
 }
