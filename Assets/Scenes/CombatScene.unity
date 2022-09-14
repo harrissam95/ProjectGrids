@@ -230,9 +230,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9026923171833470852, guid: 22a5f159ccf596345adcd3af2a91fa14, type: 3}
+      propertyPath: m_TagString
+      value: Character
+      objectReference: {fileID: 0}
     - target: {fileID: 9026923171833470855, guid: 22a5f159ccf596345adcd3af2a91fa14, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9026923171833470855, guid: 22a5f159ccf596345adcd3af2a91fa14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -283,6 +287,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9026923171833470852, guid: 22a5f159ccf596345adcd3af2a91fa14, type: 3}
   m_PrefabInstance: {fileID: 534600812}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &621103422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 621103424}
+  - component: {fileID: 621103423}
+  m_Layer: 0
+  m_Name: Turn Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &621103423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621103422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f840e872f3a1d9a45a807df15ef562a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnOrder: []
+  mainCharacter: {fileID: 534600813}
+--- !u!4 &621103424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621103422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.549095, y: -5.948797, z: 20.73081}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +425,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &887716152
 PrefabInstance:
@@ -384,6 +434,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1170924604}
     m_Modifications:
+    - target: {fileID: 2499896203927110506, guid: 6e7580fa28ac9594581bc4aefca211dd, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 3723679123717154671, guid: da04d85dd20758e4185894f0898c650b, type: 3}
     - target: {fileID: 2499896203927110506, guid: 6e7580fa28ac9594581bc4aefca211dd, type: 3}
       propertyPath: width
       value: 12
@@ -588,7 +642,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1825063513}
-  hexCanvas: {fileID: 1202415847}
+--- !u!114 &1077492416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534600813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c2bbccf327b504c8492bd4ccdf4648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Sam
+  health: 100
+  mana: 100
+  defense: 100
+  attack: 100
+  movement: 100
+  speed: 100
 --- !u!1 &1170924603
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +691,7 @@ Transform:
   m_Children:
   - {fileID: 887716153}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1202415844 stripped
 MonoBehaviour:
@@ -632,11 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a009f684d3d474c9c868fcb3ed233a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &1202415847 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 2354374218769197087, guid: b4166364c9f0643478602d3f6d3f8c4e, type: 3}
-  m_PrefabInstance: {fileID: 2354374219567439993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!223 &1560869310 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 6187469951642675939, guid: 6e7580fa28ac9594581bc4aefca211dd, type: 3}
@@ -711,7 +778,7 @@ Transform:
   m_Children:
   - {fileID: 348525387}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &1825063513 stripped
 MonoBehaviour:
@@ -825,7 +892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2354374218769197083, guid: b4166364c9f0643478602d3f6d3f8c4e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2354374218769197083, guid: b4166364c9f0643478602d3f6d3f8c4e, type: 3}
       propertyPath: m_AnchorMax.x

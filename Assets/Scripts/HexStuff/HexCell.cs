@@ -11,6 +11,7 @@ public class HexCell : MonoBehaviour
     [SerializeField] private HexCell[] neighbors;
     [SerializeField] private bool walled;
     [SerializeField] private int distance;
+    [SerializeField] private string occupied = "";
 
     public int Elevation
     {
@@ -56,6 +57,18 @@ public class HexCell : MonoBehaviour
         {
             distance = value;
             UpdateDistanceLabel();
+        }
+    }
+
+    public string Occupied
+    {
+        get
+        {
+            return occupied;
+        }
+        set
+        {
+            occupied = value;
         }
     }
 

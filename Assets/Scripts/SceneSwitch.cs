@@ -13,17 +13,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-    //Init class-wide variables
     private int sceneId;
     private string colliderTag;
     
-    //start
     private void Start()
     {
         //get index value of currently loaded scene
         sceneId = SceneManager.GetActiveScene().buildIndex;
         setPlayerLocation();
-    }//end Start
+    }
 
     //switch scenes on trigger depending on what the collision is with
     private void OnTriggerEnter(Collider other)
@@ -49,7 +47,7 @@ public class SceneSwitch : MonoBehaviour
                 break;
         }
 
-    }//end onTriggerEnter
+    }
 
     //get and store info like current position, current rotation, and current scene before loading a new one
     private void storeInfo(Collider collider)
@@ -67,7 +65,7 @@ public class SceneSwitch : MonoBehaviour
         }
 
         MainManager.Instance.lastScene = sceneId;
-    }//end storeInfo
+    }
 
     //sets the player's location based on what's needed
     private void setPlayerLocation()
@@ -93,6 +91,6 @@ public class SceneSwitch : MonoBehaviour
                 GetComponent<CharacterController>().enabled = true;
             }
         }
-    }//end setPlayerLocation
+    }
 
 }

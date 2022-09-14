@@ -7,6 +7,7 @@ TagManager:
   - Grass
   - Door
   - DoorSpawn
+  - Character
   layers:
   - Default
   - TransparentFX

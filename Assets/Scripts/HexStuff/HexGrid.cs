@@ -6,6 +6,7 @@ using System.IO;
 
 public class HexGrid : MonoBehaviour
 {
+    public GameObject enemy;
     public HexCell cellPrefab;
     public Text cellLabelPrefab;
     public int width = 20;
@@ -164,6 +165,16 @@ public class HexGrid : MonoBehaviour
                 
                 frontier.Sort((x, y) => x.Distance.CompareTo(y.Distance));
             }
+        }
+    }
+
+    public void SpawnEnemy(HexCell cell)
+    {
+        if (cell.Occupied == "")
+        {
+            Quaternion faceCamera = Quaternion.Euler(0, -180, 0);
+            Instantiate(enemy, cell.Position, faceCamera);
+            cell.Occupied = "enemy";
         }
     }
 

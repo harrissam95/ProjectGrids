@@ -7,15 +7,19 @@ public class HexGridMovement : MonoBehaviour
 
     public HexGrid hexGrid;
     //Using this for movement on a unit within the combat hex grid
-    private CharacterActions playerInput;
+    private HexControls playerInput;
     private HexCell searchFromCell;
-    private bool isShiftPressed;
+    private bool isLeftShiftPressed;
+    private bool isLeftCtrlPressed;
 
     private void Awake()
     {
-        playerInput = new CharacterActions();
-        playerInput.CharacterControls.Run.started += OnShift;
-        playerInput.CharacterControls.Run.canceled += OnShift;
+        playerInput = new HexControls();
+        playerInput.AllControls.LeftShift.started += OnLeftShift;
+        playerInput.AllControls.LeftShift.canceled += OnLeftShift;
+
+        playerInput.AllControls.LeftCtrl.started += OnLeftCtrl;
+        playerInput.AllControls.LeftCtrl.canceled += OnLeftCtrl;
     }
 
     private void Update()
@@ -32,33 +36,42 @@ public class HexGridMovement : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out RaycastHit hit))
         {
-            HexCell currentCell = hexGrid.GetCell(hit.point);
-            if (isShiftPressed)
+            HexCell clickedCell = hexGrid.GetCell(hit.point);
+            if (isLeftShiftPressed)
             {
                 if (searchFromCell)
                 {
                     searchFromCell.DisableHighlight();
                 }
-                searchFromCell = currentCell;
+                searchFromCell = clickedCell;
                 searchFromCell.EnableHighlight(Color.blue);
-                hexGrid.FindDistancesTo(currentCell);
+                hexGrid.FindDistancesTo(clickedCell);
+            }
+            else if (isLeftCtrlPressed)
+            {
+                hexGrid.SpawnEnemy(clickedCell);
             }
         }
     }
 
-    private void OnShift(InputAction.CallbackContext context)
+    private void OnLeftShift(InputAction.CallbackContext context)
     {
-        isShiftPressed = context.ReadValueAsButton();
+        isLeftShiftPressed = context.ReadValueAsButton();
+    }
+
+    private void OnLeftCtrl(InputAction.CallbackContext context)
+    {
+        isLeftCtrlPressed = context.ReadValueAsButton();
     }
 
     private void OnEnable()
     {
-        playerInput.CharacterControls.Enable();
+        playerInput.AllControls.Enable();
     }
 
     private void OnDisable()
     {
-        playerInput.CharacterControls.Disable();
+        playerInput.AllControls.Disable();
     }
 
 }

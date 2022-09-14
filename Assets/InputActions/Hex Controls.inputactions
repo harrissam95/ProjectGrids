@@ -1,0 +1,74 @@
+{
+    "name": "Hex Controls",
+    "maps": [
+        {
+            "name": "AllControls",
+            "id": "ebc4b7fd-c22c-40f1-89df-ad672bdd5e97",
+            "actions": [
+                {
+                    "name": "MiddleMouse",
+                    "type": "Button",
+                    "id": "914af376-f465-48d0-af55-9bd758a75fc5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftShift",
+                    "type": "Button",
+                    "id": "310bbcc9-ce59-4e2a-af8e-4443a0d6e1b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftCtrl",
+                    "type": "Button",
+                    "id": "50f855b0-40e9-4028-a331-a50afac821d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96991af9-742c-46d9-9208-c92cde682576",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftShift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73c9dd53-a003-4fe7-ab3b-fc0f07a4c136",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftCtrl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1a435fd-8735-441a-902c-d4ef2df7b760",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiddleMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
